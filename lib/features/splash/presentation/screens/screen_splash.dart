@@ -1,5 +1,7 @@
 import 'package:antripe_task/core/constants/app_color.dart';
+import 'package:antripe_task/core/constants/style_constants.dart';
 import 'package:antripe_task/core/widgets/custom_button.dart';
+import 'package:antripe_task/core/widgets/custom_space.dart';
 import 'package:antripe_task/core/widgets/custom_text.dart';
 import 'package:antripe_task/core/widgets/measurement.dart';
 import 'package:flutter/material.dart';
@@ -215,23 +217,17 @@ class _SplashScreenState extends State<SplashScreen>
           CurvedAnimation(parent: _bottomCircleCtrl, curve: Curves.easeInCubic),
         );
 
-    // 2. Logo moves up + fades in properly (600ms → 1300ms)
     _logoCtrl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 700),
     );
     _logoMoveAnim = Tween<Offset>(
       begin: Offset.zero,
-      end: const Offset(0, -0.35),
+      end: const Offset(0, -0.15),
     ).animate(CurvedAnimation(parent: _logoCtrl, curve: Curves.easeOutCubic));
     _logoScaleAnim = Tween<double>(begin: 1.0, end: 0.65)
         .animate(CurvedAnimation(parent: _logoCtrl, curve: Curves.easeOutCubic));
-    // _logoFadeAnim = Tween<double>(
-    //   begin: 1.0,
-    //   end: 1.0,
-    // ).animate(_logoCtrl); // stays visible
 
-    // 3. Bottom sheet rises (900ms → 1500ms)
     _sheetCtrl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 600),
@@ -251,18 +247,15 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> _startSequence() async {
     await Future.delayed(const Duration(milliseconds: 600));
 
-    // Circles slide out simultaneously
     _topCircleCtrl.forward();
     _bottomCircleCtrl.forward();
 
     await Future.delayed(const Duration(milliseconds: 500));
 
-    // Logo moves upward
     _logoCtrl.forward();
 
     await Future.delayed(const Duration(milliseconds: 300));
 
-    // Bottom sheet rises
     _sheetCtrl.forward();
   }
 
@@ -277,22 +270,19 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    final circleR = measurement.width() * 0.42;
-
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Stack(
         children: [
-          // ── Top-right decorative circle ──────────────────────────────────
           SlideTransition(
             position: _topCircleAnim,
             child: Align(
               alignment: Alignment.topRight,
               child: Transform.translate(
-                offset: Offset(circleR * 0.45, -circleR * 0.38),
+                offset: Offset(measurement.width()-measurement.margin(282), measurement.margin(-70)),
                 child: Container(
-                  width: circleR * 1.5,
-                  height: circleR * 1.5,
+                  width: measurement.margin(160),
+                  height: measurement.margin(160),
                   decoration: BoxDecoration(
                     color: AppColors.primary,
                     shape: BoxShape.circle,
@@ -301,27 +291,23 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
           ),
-
-          // ── Bottom-left decorative circle ─────────────────────────────────
           SlideTransition(
             position: _bottomCircleAnim,
             child: Align(
               alignment: Alignment.bottomLeft,
               child: Transform.translate(
-                offset: Offset(-circleR * 0.55, circleR * 0.45),
+                offset: Offset(measurement.margin(-150), measurement.height()-measurement.margin(613)),
                 child: Container(
-                  width: circleR * 1.7,
-                  height: circleR * 1.7,
+                  width: measurement.margin(353),
+                  height: measurement.margin(353),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.18),
+                    color: AppColors.primary,
                     shape: BoxShape.circle,
                   ),
                 ),
               ),
             ),
           ),
-
-          // ── Logo (centered, moves up) ─────────────────────────────────────
           SlideTransition(
             position: _logoMoveAnim,
             child: Center(
@@ -340,8 +326,6 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
           ),
-
-          // ── Bottom Welcome Sheet ──────────────────────────────────────────
           SlideTransition(
             position: _sheetAnim,
             child: FadeTransition(
@@ -349,15 +333,15 @@ class _SplashScreenState extends State<SplashScreen>
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  width: double.infinity,
+                  width: measurement.width(),
                   padding: EdgeInsets.symmetric(
-                    horizontal: measurement.width() * 0.08,
-                    vertical: measurement.height() * 0.045,
+                    horizontal: measurement.margin(24),
+                    vertical: measurement.margin(48),
                   ),
                   decoration: BoxDecoration(
                     color: AppColors.primary,
                     borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(32),
+                      top: Radius.circular(24),
                     ),
                   ),
                   child: Column(
@@ -368,37 +352,36 @@ class _SplashScreenState extends State<SplashScreen>
                         'Welcome',
                         textStyle: TextStyle(
                           color: Colors.white,
-                          fontSize: measurement.width() * 0.085,
-                          fontWeight: FontWeight.w800,
+                          fontSize: AppFontSize.xxLargeTextSize,
+                          fontWeight: FontWeight.w900,
                           height: 1.1,
                         ),
                       ),
-                      SizedBox(height: measurement.height() * 0.018),
+                      customSpace(height: measurement.margin(8)),
                       customText(text:
                       'Lorem ipsum dolor sit amet consectetur adipiscing elit. '
                         'Pellentesque fusce lobortis tincidunt vestibulum nisi '
                         'nulla egestas nibh diam tincidunt.',
                         textStyle: TextStyle(
                           color: Colors.white.withValues(alpha: 0.72),
-                          fontSize: measurement.width() * 0.033,
+                          fontSize: AppFontSize.mediumTextSize,
                           height: 1.55,
                         ),
                       ),
-                      SizedBox(height: measurement.height() * 0.032),
+                      customSpace(height: measurement.margin(24)),
                       CustomButton(
                         height: measurement.margin(56),
-                        width: measurement.margin(326),
+                        width: measurement.margin(342),
                         onTap: () {},
                         buttonText: 'Getting Started',
                         buttonColor: AppColors.white,
                         borderRadius: measurement.margin(40),
                         buttonTextStyle: TextStyle(
                           fontWeight: FontWeight.w700,
-                          fontSize: measurement.width() * 0.04,
+                          fontSize: AppFontSize.largeTextSize,
                           letterSpacing: 0.5,
                         ),
                       ),
-                      SizedBox(height: measurement.height() * 0.01),
                     ],
                   ),
                 ),
