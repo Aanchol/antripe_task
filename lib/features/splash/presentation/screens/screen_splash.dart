@@ -6,6 +6,9 @@ import 'package:antripe_task/core/widgets/custom_text.dart';
 import 'package:antripe_task/core/widgets/measurement.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/navigation/route_paths.dart';
+import '../../../../core/navigation/services/navigation_service.dart';
+
 // class SplashScreen extends StatefulWidget {
 //   const SplashScreen({super.key});
 //
@@ -372,7 +375,9 @@ class _SplashScreenState extends State<SplashScreen>
                       CustomButton(
                         height: measurement.margin(56),
                         width: measurement.margin(342),
-                        onTap: () {},
+                        onTap: () {
+                          NavigationService().navigateTo(RoutePaths.home);
+                        },
                         buttonText: 'Getting Started',
                         buttonColor: AppColors.white,
                         borderRadius: measurement.margin(40),

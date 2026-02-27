@@ -15,7 +15,7 @@ class CustomHomeAppBar extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            NavigationService().navigateTo(RoutePaths.profile);
+            //NavigationService().navigateTo(RoutePaths.profile);
           },
           child: Padding(
             padding: EdgeInsets.all(measurement.margin(16)),

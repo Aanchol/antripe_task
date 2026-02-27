@@ -44,18 +44,20 @@ class AppColors {
   static Color get black => const Color(0xFF000000);
   static Color get black28 => const Color(0xFF282828);
   static Color get black50 => const Color(0xFFF4F5F7);
-  static Color get black30 => const Color(0xFFF4F4F4);
+  static Color get black30 => const Color(0xFFE5E5EA);
   static Color get black200 => const Color(0xFFC9CCD2);
   static Color get black300 => const Color(0xFFB3B3B3);
-  static Color get black400 => const Color(0xFF868990);
+  static Color get black400 => const Color(0xFF8A8A8E);
   static Color get black500 => const Color(0xFF606268);
   static Color get black700 => const Color(0xFF4D4D4D);
-  static Color get black850 => const Color(0xFF1e1e1e);
+  static Color get black850 => const Color(0xFF1C1C1E);
   static Color get black750 => const Color(0xFF333333);
   static Color get black800 => const Color(0xFF12141A);
   static Color get black950 => const Color(0xFF121212);
   static Color get black900 => const Color(0xFF1A1A1A);
-  static Color get greyLight => const Color(0xFFCAD6E3);
+  static Color get grey200 => const Color(0xFFCAD6E3);
+  static Color get grey => const Color(0xFF8A8A8E);
+  static Color get greyLight => const Color(0xFFF2F2F7);
   static Color get grey100 => const Color(0xFFF2F2F2);
   static Color get blackOp50 => const Color(0x86000000);
   static Color get black24 => const Color(0xFF3d3d3d);
@@ -75,5 +77,5 @@ class AppColors {
   static Color get approved => Colors.green;
   static Color get reject => Colors.red;
   static Color get resubmissionRequested => const Color(0xFFEE7470);
-  static Color grey = const Color.fromRGBO(177, 177, 177, 1);
+  //static Color grey = const Color.fromRGBO(177, 177, 177, 1);
 }
