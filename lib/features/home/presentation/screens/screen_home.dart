@@ -1,9 +1,9 @@
-
 import 'package:antripe_task/core/constants/app_color.dart';
 import 'package:antripe_task/features/home/presentation/widgets/home_contact_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/widgets/custom_debounce_widget.dart';
 import '../../data/models/home_contact_list_model.dart';
 import '../bloc/home_bloc.dart';
 import '../bloc/home_event.dart';
@@ -16,14 +16,38 @@ import '../widgets/home_top_bar_widget.dart';
 
 // Alphabet index letters
 const List<String> _alphabetIndex = [
-  '#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
-  'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S',
-  'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+  '#',
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z',
 ];
 
 // ─── Contact Screen ───────────────────────────────────────────────────────────
 class ScreenHome extends StatefulWidget {
-   const ScreenHome({super.key});
+  const ScreenHome({super.key});
 
   @override
   State<ScreenHome> createState() => _ScreenHomeState();
@@ -33,6 +57,10 @@ class _ScreenHomeState extends State<ScreenHome> {
   int selectedTab = 0;
   int selectedCategory = 0;
   bool isSearchMode = false;
+  String searchText = '';
+
+  final CustomDebounceWidget _debouncer = CustomDebounceWidget();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -51,20 +79,42 @@ class _ScreenHomeState extends State<ScreenHome> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 isSearchMode
-                    ? HomeSearchBarWidget(
-                  onCancel: () {
-                    setState(() => isSearchMode = false);
-                  },
-                )
+                    ?
+                      // HomeSearchBarWidget(
+                      //   onCancel: () {
+                      //     setState(() => isSearchMode = false);
+                      //   },
+                      // )
+                      HomeSearchBarWidget(
+                        onCancel: () {
+                          context.read<HomeBloc>().add(
+                            SearchContactEvent(
+                              query: '',
+                              categoryIndex:
+                                  selectedCategory, // current selected category
+                            ),
+                          );
+                        },
+                        onChanged: (value) {
+                          _debouncer.run(() {
+                            context.read<HomeBloc>().add(
+                              SearchContactEvent(
+                                query: value,
+                                categoryIndex: selectedCategory,
+                              ),
+                            );
+                          });
+                        },
+                      )
                     : HomeTopBarWidget(
-                  selectedTab: selectedTab,
-                  onTabSelect: (index) {
-                    setState(() => selectedTab = index);
-                  },
-                  onSearchToggle: () {
-                    setState(() => isSearchMode = true);
-                  },
-                ),
+                        selectedTab: selectedTab,
+                        onTabSelect: (index) {
+                          setState(() => selectedTab = index);
+                        },
+                        onSearchToggle: () {
+                          setState(() => isSearchMode = true);
+                        },
+                      ),
                 HomeCategoryListWidget(
                   selectedIndex: selectedCategory,
                   onSelect: (index) {
@@ -72,9 +122,7 @@ class _ScreenHomeState extends State<ScreenHome> {
                   },
                 ),
                 const SizedBox(height: 8),
-                Expanded(
-                  child: HomeContactListWidget(),
-                ),
+                Expanded(child: HomeContactListWidget()),
               ],
             ),
             Positioned(
@@ -93,7 +141,7 @@ class _ScreenHomeState extends State<ScreenHome> {
                   );
                 },
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -118,7 +166,7 @@ class _ScreenHomeState extends State<ScreenHome> {
                 padding: const EdgeInsets.symmetric(vertical: 1.2),
                 child: Text(
                   letter,
-                  style:  TextStyle(
+                  style: TextStyle(
                     fontSize: 9.5,
                     color: AppColors.grey,
                     fontWeight: FontWeight.w500,
@@ -132,4 +180,3 @@ class _ScreenHomeState extends State<ScreenHome> {
     );
   }
 }
-

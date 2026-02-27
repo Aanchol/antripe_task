@@ -51,10 +51,10 @@ class HomeContactListWidget extends StatelessWidget {
 
         return ListView.builder(
           padding: EdgeInsets.zero,
-          itemCount: filteredContacts.length,
+          itemCount: state.filteredContacts.length,
           itemBuilder: (context, index) {
-            final contact = filteredContacts[index];
-            final isLast = index == filteredContacts.length - 1;
+            final contact = state.filteredContacts[index];
+            final isLast = index == state.filteredContacts.length - 1;
 
             return _ContactTile(
               contact: contact,

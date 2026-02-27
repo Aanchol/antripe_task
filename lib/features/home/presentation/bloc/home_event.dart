@@ -15,3 +15,17 @@ class ChangeCategoryEvent extends HomeEvent {
   @override
   List<Object?> get props => [index];
 }
+
+class SearchContactEvent extends HomeEvent {
+  final String query;
+  final int categoryIndex;
+
+  const SearchContactEvent({
+    required this.query,
+    required this.categoryIndex,
+  });
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [query,categoryIndex];
+}

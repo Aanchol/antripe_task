@@ -4,10 +4,11 @@ import '../../../../core/widgets/custom_text_field.dart';
 
 class HomeSearchBarWidget extends StatelessWidget {
   final VoidCallback onCancel;
+  final ValueChanged<String>? onChanged;
 
   const HomeSearchBarWidget({
     super.key,
-    required this.onCancel,
+    required this.onCancel,  this.onChanged,
   });
 
   @override
@@ -18,7 +19,8 @@ class HomeSearchBarWidget extends StatelessWidget {
         children: [
           Expanded(
             child: CustomTextField(
-             hintText: 'Search', isObscure: false, readOnly: false,
+              onChange: onChanged,
+              hintText: 'Search', isObscure: false, readOnly: false,
               suffixIcon: GestureDetector(
                 onTap: onCancel,
                 child: const Icon(Icons.close, size: 24),
