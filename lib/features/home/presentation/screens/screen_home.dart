@@ -8,7 +8,9 @@ import '../../data/models/home_contact_list_model.dart';
 import '../bloc/home_bloc.dart';
 import '../bloc/home_event.dart';
 import '../bloc/home_state.dart';
+import '../widgets/home_add_contact_form_widget.dart';
 import '../widgets/home_category_list_widget.dart';
+import '../widgets/home_fab_widget.dart';
 import '../widgets/home_search_bar_widget.dart';
 import '../widgets/home_top_bar_widget.dart';
 
@@ -75,16 +77,23 @@ class _ScreenHomeState extends State<ScreenHome> {
                 ),
               ],
             ),
-
-            // Alphabet index on right
-            _buildAlphabetIndex(),
-
-            // FAB
             Positioned(
               right: 20,
               bottom: 24,
-              child: _buildFAB(),
-            ),
+              child: HomeFABWidget(
+                onTap: () {
+                  HomeAddContactFormWidget.show(
+                    context,
+                    onSave: () {
+                      Navigator.pop(context); // close the bottom sheet
+                    },
+                    onCancel: () {
+                      Navigator.pop(context); // close the bottom sheet
+                    },
+                  );
+                },
+              ),
+            )
           ],
         ),
       ),
@@ -119,29 +128,6 @@ class _ScreenHomeState extends State<ScreenHome> {
             );
           }).toList(),
         ),
-      ),
-    );
-  }
-
-  // ── FAB ──────────────────────────────────────────────────────────────────────
-  Widget _buildFAB() {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        width: 56,
-        height: 56,
-        decoration:  BoxDecoration(
-          color: AppColors.primary,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Color(0x401A8C6A),
-              blurRadius: 16,
-              offset: Offset(0, 6),
-            ),
-          ],
-        ),
-        child: const Icon(Icons.add, color: Colors.white, size: 28),
       ),
     );
   }

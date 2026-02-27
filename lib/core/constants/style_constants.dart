@@ -41,6 +41,18 @@ class AppTextStyle {
     fontWeight: FontWeight.w500,
     fontSize: AppFontSize.mediumTextSize,
   );
+  static TextStyle get buttonWhiteTS => TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: AppFontSize.largeTextSize,
+    letterSpacing: 0.5,
+    color: AppColors.white
+  );
+  static TextStyle get buttonBlackTS => TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: AppFontSize.largeTextSize,
+    letterSpacing: 0.5,
+    color: AppColors.black
+  );
 
   static TextStyle get largeBlackTS => GoogleFonts.robotoSlab(
     color: AppColors.black800,
