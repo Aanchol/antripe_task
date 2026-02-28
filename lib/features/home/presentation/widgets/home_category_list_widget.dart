@@ -3,6 +3,7 @@ import 'package:antripe_task/core/widgets/measurement.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/app_color.dart';
+import '../../../../core/utils/state_status.dart';
 import '../../../../core/widgets/custom_text.dart';
 import '../bloc/home_bloc.dart';
 import '../bloc/home_state.dart';
@@ -21,6 +22,10 @@ class HomeCategoryListWidget extends StatelessWidget {
       prev.selectedCategory != curr.selectedCategory ||
           prev.contactListModel != curr.contactListModel,
       builder: (context, state) {
+        if(state.stateStatus == StateStatus.loading)
+        {
+          return Center(child: CircularProgressIndicator());
+        }
         final categories =
             state.contactListModel?.contactData?.categories ?? [];
         final selectedIndex = state.selectedCategory;

@@ -53,6 +53,11 @@ class AppTextStyle {
     letterSpacing: 0.5,
     color: AppColors.black
   );
+  static TextStyle get dropDownBlackTS => TextStyle(
+    color:  AppColors.black900,
+    fontSize:AppFontSize.largeTextSize ,
+    fontWeight: FontWeight.w400,
+  );
 
   static TextStyle get largeBlackTS => GoogleFonts.robotoSlab(
     color: AppColors.black800,

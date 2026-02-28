@@ -177,6 +177,7 @@ class _HomeAddContactFormWidgetState extends State<HomeAddContactFormWidget> {
                     labelText: 'Company',
                     hintText: 'ABC Ltd.',
                     hintTextStyle: TextStyle(color: AppColors.grey),
+                    labelTextStyle: TextStyle(color: AppColors.grey),
                     isObscure: false,
                     readOnly: false,
                   ),
@@ -192,33 +193,36 @@ class _HomeAddContactFormWidgetState extends State<HomeAddContactFormWidget> {
                     decoration: InputDecoration(
                       labelText: "Relation",
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                       // borderRadius: BorderRadius.circular(12),
                         borderSide:
                         BorderSide(color: Colors.grey.shade200, width: 1),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        //borderRadius: BorderRadius.circular(12),
                         borderSide:
                         BorderSide(color: Colors.grey.shade300, width: 1),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        //borderRadius: BorderRadius.circular(12),
                         borderSide:
                         BorderSide(color: Colors.grey.shade300, width: 2),
                       ),
                     ),
-                    items: const [
+                    items: [
                       DropdownMenuItem(
                         value: 'Family',
-                        child: Text("Family"),
+                        child: customText(
+                          text:"Family",
+                          textStyle: AppTextStyle.dropDownBlackTS,
+                        ),
                       ),
                       DropdownMenuItem(
                         value: 'Friends',
-                        child: Text("Friends"),
+                        child: customText(text:"Friends",textStyle: AppTextStyle.dropDownBlackTS),
                       ),
                       DropdownMenuItem(
                         value: 'Work',
-                        child: Text("Work"),
+                        child: customText(text:"Work",textStyle: AppTextStyle.dropDownBlackTS),
                       ),
                     ],
                     onChanged: (value) {
