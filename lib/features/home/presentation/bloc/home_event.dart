@@ -18,14 +18,21 @@ class ChangeCategoryEvent extends HomeEvent {
 
 class SearchContactEvent extends HomeEvent {
   final String query;
-  final int categoryIndex;
-
-  const SearchContactEvent({
-    required this.query,
-    required this.categoryIndex,
-  });
-
+  const SearchContactEvent(this.query);
   @override
-  // TODO: implement props
-  List<Object?> get props => [query,categoryIndex];
+  List<Object?> get props => [query];
+}
+
+class ToggleSearchModeEvent extends HomeEvent {
+  final bool isSearchMode;
+  const ToggleSearchModeEvent(this.isSearchMode);
+  @override
+  List<Object?> get props => [isSearchMode];
+}
+
+class ChangeTabEvent extends HomeEvent {
+  final int index;
+  const ChangeTabEvent(this.index);
+  @override
+  List<Object?> get props => [index];
 }

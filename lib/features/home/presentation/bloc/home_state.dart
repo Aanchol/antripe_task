@@ -8,6 +8,8 @@ class HomeState extends Equatable {
   final int selectedTab;
   final int selectedCategory;
   final List<ContactsListData> filteredContacts;
+  final bool isSearchMode;
+  final String searchQuery;
 
   const HomeState({
     this.stateStatus = StateStatus.initial,
@@ -15,13 +17,18 @@ class HomeState extends Equatable {
     this.selectedTab =0,
     this.selectedCategory =0,
     this.filteredContacts =const <ContactsListData>[],
+    this.isSearchMode = false,
+    this.searchQuery = '',
   });
 
   HomeState copyWith({
     StateStatus? stateStatus,
     HomeContactListModel? contactListModel,
     int? selectedTab,
-    int? selectedCategory, List<ContactsListData>? filteredContacts,
+    int? selectedCategory,
+    List<ContactsListData>? filteredContacts,
+    bool? isSearchMode,
+    String? searchQuery,
   }) {
     return HomeState(
       stateStatus: stateStatus ?? this.stateStatus,
@@ -29,6 +36,8 @@ class HomeState extends Equatable {
       selectedTab: selectedTab ?? this.selectedTab,
       selectedCategory: selectedCategory ?? this.selectedCategory,
       filteredContacts: filteredContacts ?? this.filteredContacts,
+      isSearchMode: isSearchMode ?? this.isSearchMode,
+      searchQuery: searchQuery ?? this.searchQuery,
     );
   }
 
@@ -38,6 +47,8 @@ class HomeState extends Equatable {
     contactListModel,
     selectedTab,
     selectedCategory,
-    filteredContacts
+    filteredContacts,
+    isSearchMode,
+    searchQuery
   ];
 }

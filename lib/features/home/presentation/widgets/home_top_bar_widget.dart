@@ -1,72 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/app_color.dart';
+import '../bloc/home_bloc.dart';
+import '../bloc/home_event.dart';
+import '../bloc/home_state.dart';
 
-class HomeTopBarWidget extends StatefulWidget {
-  final int selectedTab;
-  final ValueChanged<int> onTabSelect;
+class HomeTopBarWidget extends StatelessWidget {
   final VoidCallback onSearchToggle;
+  const HomeTopBarWidget({super.key, required this.onSearchToggle});
 
-  const HomeTopBarWidget({
-    super.key,
-    required this.selectedTab,
-    required this.onTabSelect,
-    required this.onSearchToggle,
-  });
-
-  @override
-  State<HomeTopBarWidget> createState() => _HomeTopBarWidgetState();
-}
-
-class _HomeTopBarWidgetState extends State<HomeTopBarWidget> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 12, 16, 0),
-      child: Row(
-        children: [
-          // Tabs
-          TopTab(
-            label: 'Contact',
-            index: 0,
-            //isSelected: selectedTab == 0,
-            selectedIndex: widget.selectedTab,
-            onSelect: (i) => widget.onTabSelect(i),
+    return BlocBuilder<HomeBloc, HomeState>(
+      buildWhen: (prev, curr) => prev.selectedTab != curr.selectedTab,
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(20, 12, 16, 0),
+          child: Row(
+            children: [
+              TopTab(
+                label: 'Contact',
+                index: 0,
+                selectedIndex: state.selectedTab,
+                onSelect: (i) =>
+                    context.read<HomeBloc>().add(ChangeTabEvent(i)),
+              ),
+              const SizedBox(width: 20),
+              TopTab(
+                label: 'Recent',
+                index: 1,
+                selectedIndex: state.selectedTab,
+                onSelect: (i) =>
+                    context.read<HomeBloc>().add(ChangeTabEvent(i)),
+              ),
+              const Spacer(),
+              IconButton(
+                onPressed: onSearchToggle,
+                icon: const Icon(Icons.search, size: 24),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.menu, size: 24),
+              ),
+            ],
           ),
-          const SizedBox(width: 20),
-          TopTab(
-            label: 'Recent',
-            index: 1,
-            selectedIndex: widget.selectedTab,
-            onSelect: (i) => widget.onTabSelect(i),
-          ),
-
-          const Spacer(),
-
-          IconButton(
-            onPressed: widget.onSearchToggle,
-            icon: Icon(
-              Icons.search,
-              size: 24,
-              color:  AppColors.black,
-            ),
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
-          ),
-
-          const SizedBox(width: 4),
-
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.menu,
-              size: 24,
-              color: AppColors.black850,
-            ),
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(minWidth: 36, minHeight: 36),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

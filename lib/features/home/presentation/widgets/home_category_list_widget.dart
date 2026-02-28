@@ -1,72 +1,80 @@
+import 'package:antripe_task/core/widgets/custom_space.dart';
+import 'package:antripe_task/core/widgets/measurement.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/app_color.dart';
+import '../../../../core/widgets/custom_text.dart';
 import '../bloc/home_bloc.dart';
 import '../bloc/home_state.dart';
-
 class HomeCategoryListWidget extends StatelessWidget {
-  final int selectedIndex;
   final ValueChanged<int> onSelect;
 
   const HomeCategoryListWidget({
     super.key,
-    required this.selectedIndex,
     required this.onSelect,
   });
 
   @override
   Widget build(BuildContext context) {
-
     return BlocBuilder<HomeBloc, HomeState>(
+      buildWhen: (prev, curr) =>
+      prev.selectedCategory != curr.selectedCategory ||
+          prev.contactListModel != curr.contactListModel,
       builder: (context, state) {
-        final categories = state.contactListModel
-            ?.contactData
-            ?.categories ?? [];
+        final categories =
+            state.contactListModel?.contactData?.categories ?? [];
+        final selectedIndex = state.selectedCategory;
 
         return SizedBox(
-          height: 90,
+          height: measurement.margin(90),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
+            padding:  EdgeInsets.fromLTRB(measurement.margin(16), measurement.margin(14), measurement.margin(16), measurement.margin(0)),
             itemCount: categories.length,
             itemBuilder: (_, i) {
+              final isSelected = selectedIndex == i;
               final imagePath = _getCategoryImage(categories[i].name);
+
               return GestureDetector(
-                onTap:() => onSelect(i),
+                onTap: () => onSelect(i),
                 child: Container(
-                  width: 64,
-                  margin: const EdgeInsets.only(right: 8),
+                  width: measurement.margin(64),
+                  margin: EdgeInsets.only(right: measurement.margin(8)),
                   child: Column(
                     children: [
                       Container(
-                        width: 54,
-                        height: 54,
+                        width: measurement.margin(54),
+                        height: measurement.margin(54),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: selectedIndex == i ? AppColors.primary : Colors.transparent,
-                            width: 2.5,
+                            color: isSelected
+                                ? AppColors.primary
+                                : Colors.transparent,
+                            width: measurement.margin(2.5),
                           ),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(2.0),
+                          padding: EdgeInsets.all(measurement.margin(2.0)),
                           child: CircleAvatar(
-                            radius: 24,
+                            radius: measurement.margin(24),
                             backgroundImage: AssetImage(imagePath),
                             backgroundColor: AppColors.greyLight,
                           ),
                         ),
                       ),
-                      const SizedBox(height: 5),
-                      Text(
-                        categories[i].name ?? '',
-                        style: TextStyle(
+                      customSpace(height: measurement.margin(5)),
+                      customText(
+                        text: categories[i].name ?? '',
+                        textStyle: TextStyle(
                           fontSize: 11,
-                          color: selectedIndex == i ? AppColors.primary : AppColors.grey,
-                          fontWeight:
-                          selectedIndex == i ? FontWeight.w600 : FontWeight.w400,
+                          color: isSelected
+                              ? AppColors.primary
+                              : AppColors.grey,
+                          fontWeight: isSelected
+                              ? FontWeight.w600
+                              : FontWeight.w400,
                         ),
-                        overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -79,6 +87,7 @@ class HomeCategoryListWidget extends StatelessWidget {
       },
     );
   }
+
   String _getCategoryImage(String? name) {
     switch (name) {
       case 'Family':
